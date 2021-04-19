@@ -1,4 +1,4 @@
-# `zoxide`
+# zoxide
 
 [![crates.io][crates.io-badge]][crates.io]
 
@@ -30,8 +30,9 @@ Read more about the matching algorithm [here][algorithm-matching].
 
 ### Step 1: Install `zoxide`
 
-`zoxide` works across all major platforms. If your distribution isn't included
-in the list below, you can directly install the binary from GitHub:
+`zoxide` works across all major platforms (see [Repology]). If it is not
+available for your distribution, you can directly install the binary from
+GitHub:
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
@@ -49,10 +50,12 @@ If you would rather not run a script, you can download the binary from the
 | Alpine Linux   | [Alpine Linux Packages] | `apk add zoxide`                                          |
 | Arch Linux     | [AUR]                   | `yay -Sy zoxide-bin`                                      |
 | CentOS         | [Copr]                  | `dnf copr enable atim/zoxide` <br /> `dnf install zoxide` |
+| Devuan         | [Devuan Packages]       | `apt install zoxide`                                      |
 | Debian Testing | [Debian Packages]       | `apt install zoxide`                                      |
 | Fedora         | [Fedora Packages]       | `dnf install zoxide`                                      |
 | NixOS          | [nixpkgs]               | `nix-env -iA nixpkgs.zoxide`                              |
 | Parrot OS      |                         | `apt install zoxide`                                      |
+| Ubuntu         | [Ubuntu Packages]       | `apt install zoxide`                                      |
 | Void Linux     | [Void Linux Packages]   | `xbps-install -S zoxide`                                  |
 
 #### On macOS
@@ -243,6 +246,7 @@ Be sure to set these before calling `zoxide init`.
 [crates.io-badge]: https://img.shields.io/crates/v/zoxide
 [crates.io]: https://crates.io/crates/zoxide
 [debian packages]: https://packages.debian.org/testing/admin/zoxide
+[devuan packages]: https://pkginfo.devuan.org/cgi-bin/package-query.html?c=package&q=zoxide
 [demo.gif]: demo.gif
 [dports]: https://github.com/DragonFlyBSD/DPorts/tree/master/sysutils/zoxide
 [fedora packages]: https://src.fedoraproject.org/rpms/rust-zoxide
@@ -258,8 +262,10 @@ Be sure to set these before calling `zoxide init`.
 [nnn]: https://github.com/jarun/nnn
 [pkgsrc]: https://pkgsrc.se/sysutils/zoxide
 [releases]: https://github.com/ajeetdsouza/zoxide/releases
+[repology]: https://repology.org/project/zoxide/versions
 [scoop]: https://github.com/ScoopInstaller/Main/tree/master/bucket/zoxide.json
 [termux]: https://github.com/termux/termux-packages/tree/master/packages/zoxide
+[ubuntu packages]: https://packages.ubuntu.com/hirsute/zoxide
 [void linux packages]: https://github.com/void-linux/void-packages/tree/master/srcpkgs/zoxide
 [xxh-plugin-prerun-zoxide]: https://github.com/xxh/xxh-plugin-prerun-zoxide
 [xxh]: https://github.com/xxh/xxh

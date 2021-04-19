@@ -33,7 +33,7 @@ impl Cmd for Remove {
         let path = match &self.interactive {
             Some(keywords) => {
                 let query = Query::new(keywords);
-                let now = util::current_time()?;
+                let now = util::current_time();
 
                 let mut fzf = Fzf::new()?;
                 let handle = fzf.stdin();
@@ -51,8 +51,8 @@ impl Cmd for Remove {
         };
 
         if !db.remove(path) {
-            let path = util::resolve_path(&path)?;
-            let path = util::path_to_str(&path)?;
+            let path = util::path::normalize(&path)?;
+            let path = util::path::to_str(&path)?;
             if !db.remove(path) {
                 bail!("path not found in database: {}", &path)
             }

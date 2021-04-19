@@ -1,4 +1,4 @@
-use std::path::Path;
+use crate::util;
 
 pub struct Query(Vec<String>);
 
@@ -8,7 +8,12 @@ impl Query {
         I: IntoIterator<Item = S>,
         S: AsRef<str>,
     {
-        Query(keywords.into_iter().map(|s: S| to_lowercase(s)).collect())
+        Query(
+            keywords
+                .into_iter()
+                .map(|s: S| util::to_lowercase(s))
+                .collect(),
+        )
     }
 
     pub fn matches<S: AsRef<str>>(&self, path: S) -> bool {
@@ -18,10 +23,10 @@ impl Query {
             None => return true,
         };
 
-        let path = to_lowercase(path);
+        let path = util::to_lowercase(path);
 
-        let query_name = get_filename(keywords_last);
-        let dir_name = get_filename(&path);
+        let query_name = util::path::filename_str(keywords_last);
+        let dir_name = util::path::filename_str(&path);
         if !dir_name.contains(query_name) {
             return false;
         }
@@ -35,33 +40,6 @@ impl Query {
         }
 
         true
-    }
-}
-
-fn get_filename(mut path: &str) -> &str {
-    if cfg!(windows) {
-        Path::new(path)
-            .file_name()
-            .unwrap_or_default()
-            .to_str()
-            .unwrap_or_default()
-    } else {
-        if path.ends_with('/') {
-            path = &path[..path.len() - 1];
-        }
-        match path.rfind('/') {
-            Some(idx) => &path[idx + 1..],
-            None => path,
-        }
-    }
-}
-
-fn to_lowercase<S: AsRef<str>>(s: S) -> String {
-    let s = s.as_ref();
-    if s.is_ascii() {
-        s.to_ascii_lowercase()
-    } else {
-        s.to_lowercase()
     }
 }
 

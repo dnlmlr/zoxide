@@ -39,7 +39,7 @@ impl Cmd for Query {
         let mut db = db.open()?;
 
         let query = db::Query::new(&self.keywords);
-        let now = util::current_time()?;
+        let now = util::current_time();
 
         let resolve_symlinks = config::zo_resolve_symlinks();
         let mut matches = db

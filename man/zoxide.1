@@ -51,19 +51,19 @@ tab(|);
 l l.
     \fBOS|Path\fR
     Linux/BSD|T{
-\fI$XDG_DATA_HOME\fR or \fI$HOME/.local/share\fR
+\fI$XDG_DATA_HOME/zoxide\fR or \fI$HOME/.local/share/zoxide\fR
 .br
-eg. /home/alice/.local/share
+eg. /home/foo/.local/share/zoxide
 T}
     macOS|T{
-\fI$HOME/Library/Application Support\fR
+\fI$HOME/Library/Application Support/zoxide\fR
 .br
-eg. /Users/Alice/Library/Application Support
+eg. /Users/foo/Library/Application Support/zoxide
 T}
     Windows|T{
-\fI{FOLDERID_RoamingAppData}\fR
+\fI{FOLDERID_RoamingAppData}\\zoxide\fR
 .br
-eg. C:\\Users\\Alice\\AppData\\Roaming
+eg. C:\\Users\\foo\\AppData\\Roaming\\zoxide
 T}
 .TE
 .TP
@@ -96,7 +96,8 @@ the database. By default, this is set to \fI10000\fR.
 .TP
 .B _ZO_RESOLVE_SYMLINKS
 When set to \fI1\fR, z will resolve symlinks before adding directories to
-the database.
+the database. This should be set to \fI1\fR on case-insensitive but
+case-preserving filesystems. It is always set on Windows.
 .SH ALGORITHM
 .TP
 .B AGING

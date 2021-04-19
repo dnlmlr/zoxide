@@ -18,13 +18,17 @@ impl Cmd for Add {
     fn run(&self) -> Result<()> {
         let path = match &self.path {
             Some(path) => {
+                #[cfg(unix)]
                 if config::zo_resolve_symlinks() {
-                    util::canonicalize(&path)
+                    util::path::canonicalize(path)
                 } else {
-                    util::resolve_path(&path)
+                    util::path::normalize(path)
                 }
+
+                #[cfg(windows)]
+                util::path::canonicalize(path)
             }
-            None => util::current_dir(),
+            None => util::path::current_dir(),
         }?;
 
         if config::zo_exclude_dirs()?
@@ -34,8 +38,8 @@ impl Cmd for Add {
             return Ok(());
         }
 
-        let path = util::path_to_str(&path)?;
-        let now = util::current_time()?;
+        let path = util::path::to_str(&path)?;
+        let now = util::current_time();
 
         let data_dir = config::zo_data_dir()?;
         let max_age = config::zo_maxage()?;

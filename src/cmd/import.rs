@@ -37,7 +37,7 @@ impl Cmd for Import {
         match self.from {
             From::Autojump => Autojump {
                 resolve_symlinks,
-                now: util::current_time()?,
+                now: util::current_time(),
             }
             .import(&mut db, &self.path),
             From::Z => Z { resolve_symlinks }.import(&mut db, &self.path),
