@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Manpages for each subcommand.
 
+### Changed
+
+- `zoxide remove` no longer normalizes paths.
+
 ### Fixed
 
 - `cd -` on fish shells.

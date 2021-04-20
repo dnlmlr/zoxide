@@ -51,11 +51,7 @@ impl Cmd for Remove {
         };
 
         if !db.remove(path) {
-            let path = util::path::normalize(&path)?;
-            let path = util::path::to_str(&path)?;
-            if !db.remove(path) {
-                bail!("path not found in database: {}", &path)
-            }
+            bail!("path not found in database: {}", &path)
         }
 
         Ok(())

@@ -3,7 +3,7 @@ use crate::config;
 use crate::db::DatabaseFile;
 use crate::util;
 
-use anyhow::Result;
+use anyhow::{bail, Result};
 use clap::Clap;
 
 use std::path::PathBuf;
@@ -36,6 +36,10 @@ impl Cmd for Add {
             .any(|pattern| pattern.matches_path(&path))
         {
             return Ok(());
+        }
+
+        if !util::path::is_supported(&path) {
+            bail!("path not supported: {}", path.display());
         }
 
         let path = util::path::to_str(&path)?;

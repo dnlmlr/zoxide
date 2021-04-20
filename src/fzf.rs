@@ -36,6 +36,7 @@ impl Fzf {
             .wait_with_output()
             .context("wait failed on fzf")?;
 
+        // Error codes are taken from `man fzf`.
         match output.status.code() {
             // normal exit
             Some(0) => String::from_utf8(output.stdout).context("invalid unicode in fzf output"),

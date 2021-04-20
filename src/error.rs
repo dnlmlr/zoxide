@@ -3,7 +3,7 @@ use anyhow::{bail, Context, Result};
 use std::fmt::{self, Display, Formatter};
 use std::io;
 
-// Custom error type for early exit.
+/// Custom error type for early exit.
 #[derive(Debug)]
 pub struct SilentExit {
     pub code: i32,
