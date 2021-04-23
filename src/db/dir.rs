@@ -20,15 +20,10 @@ impl DirList<'_> {
     }
 
     pub fn from_bytes(bytes: &[u8]) -> Result<DirList> {
-        // Assume a maximum size for the database. This prevents bincode from
-        // throwing strange errors when it encounters invalid data.
-        const MAX_SIZE: u64 = 32 << 20; // 32 MiB
-        let deserializer = &mut bincode::options()
-            .with_fixint_encoding()
-            .with_limit(MAX_SIZE);
+        let options = &mut Self::bincode_options();
 
         // Split bytes into sections.
-        let version_size = deserializer.serialized_size(&Self::VERSION).unwrap() as _;
+        let version_size = options.serialized_size(&Self::VERSION).unwrap() as _;
         if bytes.len() < version_size {
             bail!("could not deserialize database: corrupted data");
         }
@@ -36,9 +31,9 @@ impl DirList<'_> {
 
         // Deserialize sections.
         (|| {
-            let version = deserializer.deserialize(bytes_version)?;
+            let version = options.deserialize(bytes_version)?;
             match version {
-                Self::VERSION => Ok(deserializer.deserialize(bytes_dirs)?),
+                Self::VERSION => Ok(options.deserialize(bytes_dirs)?),
                 version => bail!(
                     "unsupported version (got {}, supports {})",
                     version,
@@ -51,18 +46,30 @@ impl DirList<'_> {
 
     pub fn to_bytes(&self) -> Result<Vec<u8>> {
         (|| -> bincode::Result<_> {
+            let options = &mut Self::bincode_options();
+
             // Preallocate buffer with combined size of sections.
-            let version_size = bincode::serialized_size(&Self::VERSION)?;
-            let dirs_size = bincode::serialized_size(&self)?;
+            let version_size = options.serialized_size(&Self::VERSION)?;
+            let dirs_size = options.serialized_size(&self)?;
             let buffer_size = version_size + dirs_size;
             let mut buffer = Vec::with_capacity(buffer_size as _);
 
             // Serialize sections into buffer.
-            bincode::serialize_into(&mut buffer, &Self::VERSION)?;
-            bincode::serialize_into(&mut buffer, &self)?;
+            options.serialize_into(&mut buffer, &Self::VERSION)?;
+            options.serialize_into(&mut buffer, &self)?;
+
             Ok(buffer)
         })()
         .context("could not serialize database")
+    }
+
+    fn bincode_options() -> impl bincode::Options {
+        // Assume a maximum size for the database. This prevents bincode from
+        // throwing strange errors when it encounters invalid data.
+        const MAX_SIZE: u64 = 32 << 20; // 32 MiB
+        bincode::options()
+            .with_fixint_encoding()
+            .with_limit(MAX_SIZE)
     }
 }
 
