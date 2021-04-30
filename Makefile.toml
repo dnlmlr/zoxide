@@ -1,0 +1,4 @@
+[tasks.release]
+env = { CARGO_MAKE_RUST_SCRIPT_PROVIDER = "cargo-play" }
+script_runner = "@rust"
+script = { file = "contrib/scripts/release.rs" }

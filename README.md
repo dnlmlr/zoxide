@@ -115,7 +115,7 @@ Add this to your configuration (usually `~/.bashrc`):
 eval "$(zoxide init bash)"
 ```
 
-#### `elvish`
+#### `elvish v0.15.0+`
 
 Add this to your configuration (usually `~/.elvish/rc.elv`):
 
@@ -131,7 +131,7 @@ Add this to your configuration (usually `~/.config/fish/config.fish`):
 zoxide init fish | source
 ```
 
-#### `nushell`
+#### `nushell v0.29.0+`
 
 Initialize zoxide's Nushell script:
 
